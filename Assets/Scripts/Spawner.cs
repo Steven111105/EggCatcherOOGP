@@ -19,11 +19,21 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(spawnTime);
             int random = Random.Range(0, 2);
             float randomX = Random.Range(-5f, 5f);
+            GameObject item = null;
+            float randomAngle = Random.Range(0f, 360f);
+            Quaternion rotation = Quaternion.Euler(0, 0, randomAngle); 
             if(random == 0){
-                Instantiate(eggPrefab, new Vector2(randomX, 6), Quaternion.identity);
+                item = Instantiate(eggPrefab, new Vector2(randomX, 6), rotation);
             }else{
-                Instantiate(bombPrefab, new Vector2(randomX, 6), Quaternion.identity);
+                item = Instantiate(bombPrefab, new Vector2(randomX, 6), rotation);
             }
+            int multiplier;
+            if(Random.Range(0, 2) == 0){
+                multiplier = -1;
+            }else{
+                multiplier = 1;
+            }
+            item.GetComponent<Rigidbody2D>().angularVelocity = multiplier * Random.Range(100f, 200f);
         }
     }
 }

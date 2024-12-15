@@ -8,13 +8,18 @@ public class Player : MonoBehaviour
     Rigidbody2D rb;
     float movement;
     public float playerSpeed;
-    int life;
     [SerializeField] TMP_Text scoreText;
     int score;
+    [SerializeField] TMP_Text lifeText;
+    [SerializeField] int life;
+    [SerializeField] GameOverScript gameOverScript;
+
 
     // Start is called before the first frame update
     void Start()
     {
+        Time.timeScale = 1;
+        gameOverScript.gameObject.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
         life = 3;
     }
@@ -30,7 +35,7 @@ public class Player : MonoBehaviour
     }
 
     private void OnTriggerEnter2D(Collider2D other) {
-        Debug.Log("trigger enter");
+        // Debug.Log("trigger enter");
         if(other.CompareTag("Egg")){
             Destroy(other.gameObject);
             score++;
@@ -38,11 +43,15 @@ public class Player : MonoBehaviour
         }else if(other.CompareTag("Bomb")){
             Destroy(other.gameObject);
             life--;
-            GameOver();
+            lifeText.text = "Life: " + life;
+            if(life == 0){
+                GameOver();
+            }
         }
     }
 
     void GameOver(){
-        Debug.Log("Game Over");
+        // Debug.Log("Game Over");
+        gameOverScript.ShowGameOver(score);
     }
 }
