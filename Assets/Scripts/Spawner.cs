@@ -19,7 +19,7 @@ public class Spawner : MonoBehaviour
             yield return new WaitForSeconds(spawnTime);
             int random = Random.Range(0, 2);
             float randomX = Random.Range(-5f, 5f);
-            GameObject item = null;
+            GameObject item;
             float randomAngle = Random.Range(0f, 360f);
             Quaternion rotation = Quaternion.Euler(0, 0, randomAngle); 
             if(random == 0){

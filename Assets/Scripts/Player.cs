@@ -13,6 +13,7 @@ public class Player : MonoBehaviour
     [SerializeField] TMP_Text lifeText;
     [SerializeField] int life;
     [SerializeField] GameOverScript gameOverScript;
+    PlayerSFX playerSFX;
 
 
     // Start is called before the first frame update
@@ -21,6 +22,7 @@ public class Player : MonoBehaviour
         Time.timeScale = 1;
         gameOverScript.gameObject.SetActive(false);
         rb = GetComponent<Rigidbody2D>();
+        playerSFX = GetComponent<PlayerSFX>();
         life = 3;
     }
 
@@ -38,10 +40,12 @@ public class Player : MonoBehaviour
         // Debug.Log("trigger enter");
         if(other.CompareTag("Egg")){
             Destroy(other.gameObject);
+            playerSFX.PlayEggSFX();
             score++;
             scoreText.text = "Score: " + score;
         }else if(other.CompareTag("Bomb")){
             Destroy(other.gameObject);
+            playerSFX.PlayBombSFX();
             life--;
             lifeText.text = "Life: " + life;
             if(life == 0){
